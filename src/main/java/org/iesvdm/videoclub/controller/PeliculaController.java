@@ -40,13 +40,10 @@ public class PeliculaController {
         return this.peliculaService.replace(id, pelicula);
     }
 
-
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deletePelicula(@PathVariable("id") Long id) {
         this.peliculaService.delete(id);
     }
-
-
 }

@@ -10,24 +10,26 @@ import {Router} from "@angular/router";
 })
 export class CreateComponent implements OnInit {
 
-  form: FormGroup =  new FormGroup({
-    nombre:  new FormControl('', [ Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+') ])
+  form: FormGroup = new FormGroup({
+    nombre: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+')]),
+    fecha: new FormControl()
   });
 
   constructor(
     public categoriaService: CategoriaService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
 
   }
 
-  get f(){
+  get f() {
     return this.form.controls;
   }
 
-  submit(){
+  submit() {
     console.log(this.form.value);
     this.categoriaService.create(this.form.value).subscribe(res => {
       console.log('Categoría creada correctamente! + res');

@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {  Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
-import { Categoria } from './categoria';
+import {Categoria} from './categoria';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService {
 
-  private apiURL = "http://localhost:8080/api/............¿?";
+  private apiURL = "http://localhost:8080/categoria/";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -19,7 +19,8 @@ export class CategoriaService {
     })
   };
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   getAll(): Observable<Categoria[]> {
     return this.httpClient.get<Categoria[]>(this.apiURL)
@@ -49,7 +50,7 @@ export class CategoriaService {
       )
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.httpClient.delete<Categoria>(this.apiURL + id, this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
@@ -60,7 +61,7 @@ export class CategoriaService {
 
     let errorMessage = '';
 
-    if(error.error instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;

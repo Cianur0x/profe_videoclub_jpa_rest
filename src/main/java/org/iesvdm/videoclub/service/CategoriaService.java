@@ -1,5 +1,6 @@
 package org.iesvdm.videoclub.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.exception.CategoriaNotFoundException;
 import org.iesvdm.videoclub.repository.CategoriaRepository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
@@ -29,11 +31,9 @@ public class CategoriaService {
     }
 
     public Categoria replace(Long id, Categoria categoria) {
-
         return this.categoriaRepository.findById(id).map(p -> (id.equals(categoria.getId()) ?
                         this.categoriaRepository.save(categoria) : null))
                 .orElseThrow(() -> new CategoriaNotFoundException(id));
-
     }
 
     public void delete(Long id) {
