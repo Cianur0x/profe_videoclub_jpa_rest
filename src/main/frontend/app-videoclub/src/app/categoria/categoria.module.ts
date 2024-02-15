@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CategoriaRoutingModule } from './categoria-routing.module';
-import { IndexComponent } from './index/index.component';
-import { CreateComponent } from './create/create.component';
-import { EditComponent } from './edit/edit.component';
+import {CategoriaRoutingModule} from './categoria-routing.module';
+import {IndexComponent} from './index/index.component';
+import {CreateComponent} from './create/create.component';
+import {EditComponent} from './edit/edit.component';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,4 +21,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CategoriaRoutingModule
   ]
 })
-export class CategoriaModule { }
+export class CategoriaModule {
+}
