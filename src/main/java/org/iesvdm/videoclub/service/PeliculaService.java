@@ -2,6 +2,7 @@ package org.iesvdm.videoclub.service;
 
 import org.iesvdm.videoclub.domain.Pelicula;
 import org.iesvdm.videoclub.exception.PeliculaNotFoundException;
+import org.iesvdm.videoclub.repository.IdiomaRepository;
 import org.iesvdm.videoclub.repository.PeliculaRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,20 @@ public class PeliculaService {
 
     private final PeliculaRepository peliculaRepository;
 
-    public PeliculaService(PeliculaRepository peliculaRepository) {
+    private final IdiomaRepository idiomaRepository;
+
+    public PeliculaService(PeliculaRepository peliculaRepository, IdiomaRepository idiomaRepository) {
         this.peliculaRepository = peliculaRepository;
+        this.idiomaRepository = idiomaRepository;
     }
+
 
     public List<Pelicula> all() {
         return this.peliculaRepository.findAll();
     }
 
     public Pelicula save(Pelicula pelicula) {
+        idiomaRepository.findById(pelicula.getIdIdioma()).ifPresentOrElse(pelicula::setIdioma, () -> new Exception("No existe ese idioma"));
         return this.peliculaRepository.save(pelicula);
     }
 
@@ -31,16 +37,16 @@ public class PeliculaService {
 
     public Pelicula replace(Long id, Pelicula pelicula) {
 
-        return this.peliculaRepository.findById(id).map( p -> (id.equals(pelicula.getIdPelicula())  ?
-                                                            this.peliculaRepository.save(pelicula) : null))
+        return this.peliculaRepository.findById(id).map(p -> (id.equals(pelicula.getIdPelicula()) ?
+                        this.peliculaRepository.save(pelicula) : null))
                 .orElseThrow(() -> new PeliculaNotFoundException(id));
 
     }
 
     public void delete(Long id) {
-        this.peliculaRepository.findById(id).map(p -> {this.peliculaRepository.delete(p);
-                                                        return p;})
-                .orElseThrow(() -> new PeliculaNotFoundException(id));
+        this.peliculaRepository.findById(id).map(p -> {
+            this.peliculaRepository.delete(p);
+            return p;
+        }).orElseThrow(() -> new PeliculaNotFoundException(id));
     }
-
 }

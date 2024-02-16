@@ -1,1 +1,49 @@
-<p>create works!</p>
+<div>
+
+  <div class="d-flex justify-content-between">
+    <h4>Película</h4>
+    <a href="#" routerLink="/pelicula/index" class="btn">Volver</a>
+  </div>
+
+  <hr/>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group row">
+      <div class="col-md-6 ">
+        <label for="titulo">Titulo:</label>
+        <input
+          formControlName="titulo"
+          id="titulo"
+          type="text"
+          class="form-control">
+        <div *ngIf="f.titulo.touched && f.nombre.invalid" class="alert alert-danger">
+          <div *ngIf="f.titulo.errors.required">* Nombre es requerido.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6 my-3">
+        <label for="fechaActualizacion">Fecha Última Actualización:</label>
+        <input
+          formControlName="fechaActualizacion"
+          id="fechaActualizacion"
+          type="date"
+          class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6 ">
+        <label for="idIdioma">Idioma:</label>
+        <input
+          formControlName="idIdioma"
+          id="idIdioma"
+          type="number"
+          class="form-control">
+        <ul *ngIf="f.idIdioma.touched && f.idIdioma.invalid" class="text-danger my-2">
+          <li *ngIf="f.idIdioma.errors.required">Idioma es requerido.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+  </form>
+</div>

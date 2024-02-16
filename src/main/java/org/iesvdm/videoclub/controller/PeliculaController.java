@@ -1,7 +1,10 @@
 package org.iesvdm.videoclub.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.videoclub.domain.Idioma;
 import org.iesvdm.videoclub.domain.Pelicula;
+import org.iesvdm.videoclub.repository.IdiomaRepository;
+import org.iesvdm.videoclub.service.IdiomaService;
 import org.iesvdm.videoclub.service.PeliculaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +17,22 @@ import java.util.List;
 @RequestMapping("/peliculas")
 public class PeliculaController {
     private final PeliculaService peliculaService;
+    private final IdiomaService idiomaService;
 
-    public PeliculaController(PeliculaService peliculaService) {
+    public PeliculaController(PeliculaService peliculaService, IdiomaService idiomaService) {
         this.peliculaService = peliculaService;
+        this.idiomaService = idiomaService;
     }
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
-    @PostMapping({"","/"})
-    public Pelicula newPelicula(@RequestBody Pelicula pelicula) {
+    @PostMapping({"", "/"})
+    public Pelicula newPelicula(@RequestBody Pelicula pelicula ) {
+
         return this.peliculaService.save(pelicula);
     }
 

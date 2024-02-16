@@ -37,6 +37,7 @@ public class CategoriaController {
 
     @PutMapping("/{id}")
     public Categoria replaceCategoria(@PathVariable("id") Long id, @RequestBody Categoria categoria) {
+        log.info("CATEGORIA 1" + categoria);
         return this.categoriaService.replace(id, categoria);
     }
 

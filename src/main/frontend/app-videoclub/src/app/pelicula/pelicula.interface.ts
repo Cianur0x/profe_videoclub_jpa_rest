@@ -1,6 +1,8 @@
 export interface Pelicula {
   idPelicula: number;
 
+  idIdioma: number;
+
   titulo: string;
 
   descripcion: string;
