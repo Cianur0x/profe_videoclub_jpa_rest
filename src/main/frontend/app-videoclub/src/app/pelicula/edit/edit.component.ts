@@ -22,7 +22,7 @@ export class EditComponent implements OnInit {
     titulo: new FormControl('', [Validators.required]),
     idPelicula: new FormControl('', [Validators.required]),
     idIdioma: new FormControl('', [Validators.required]),
-    ultimaActualizacion: new FormControl("1970/01/01", [])
+    ultimaActualizacion: new FormControl("1970-01-01", [])
   });
 
   constructor(

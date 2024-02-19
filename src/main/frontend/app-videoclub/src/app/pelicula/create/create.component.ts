@@ -9,11 +9,10 @@ import {PeliculaService} from "../pelicula.service";
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
   form: FormGroup = new FormGroup({
-    titulo: new FormControl('', []),
-    fechaActualizacion: new FormControl(),
-    idIdioma: new FormControl(0, [])
+    titulo: new FormControl('', [Validators.required]),
+    fechaActualizacion: new FormControl("2000-01-01"),
+    idIdioma: new FormControl(0, [Validators.required])
   });
 
   constructor(

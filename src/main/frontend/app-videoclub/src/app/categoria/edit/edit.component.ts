@@ -12,10 +12,11 @@ import {Categoria} from "../categoria";
 export class EditComponent implements OnInit {
 
   id: number = 0;
-  categoria: Categoria = {id: 0, nombre: "VOID", ultimaActualizacion: "1970/01/01"};
+  categoria: Categoria = {id: 0, nombre: "VOID", ultimaActualizacion: "1970-01-01"};
   form: FormGroup = new FormGroup({
     id: new FormControl(0, [Validators.required]),
-    nombre: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+')])
+    nombre: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+')]),
+    ultimaActualizacion: new FormControl('', [Validators.required])
   });
 
   constructor(
@@ -31,6 +32,7 @@ export class EditComponent implements OnInit {
       this.categoria = data;
       this.form.get('id')?.setValue(this.categoria.id);
       this.form.get('nombre')?.setValue(this.categoria.nombre);
+      this.form.get('ultimaActualizacion')?.setValue(this.categoria.ultimaActualizacion);
     });
   }
 
