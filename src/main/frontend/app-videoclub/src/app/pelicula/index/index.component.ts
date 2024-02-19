@@ -16,7 +16,6 @@ export class IndexComponent {
   ngOnInit(): void {
     this.peliculaService.getAll().subscribe((data: Pelicula[]) => {
       this.peliculas = data;
-      console.log(this.peliculas);
     })
   }
 

@@ -1,1 +1,49 @@
-<p>edit works!</p>
+<div>
+  <div class="d-flex justify-content-between">
+    <h4>Editar Película</h4>
+    <a href="#" routerLink="/categoria/index" class="btn">Volver</a>
+  </div>
+
+  <hr/>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group row">
+      <div class="col-md-6 ">
+        <input type="hidden" name="id" formControlName="idPelicula" class="form-control" [value]="pelicula.idPelicula"/>
+        <label for="nombre">Titulo:</label>
+        <input
+          formControlName="titulo"
+          id="nombre"
+          type="text"
+          class="form-control" [value]="pelicula.titulo">
+        <div *ngIf="f.titulo.touched && f.titulo.invalid" class="alert alert-danger">
+          <div *ngIf="f.titulo.errors.required">* Titulo es requerido.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6 my-3">
+        <label for="fechaActualizacion">Fecha Última Actualización:</label>
+        <input
+          formControlName="ultimaActualizacion"
+          id="fechaActualizacion"
+          type="date"
+          class="form-control" [value]="pelicula.ultimaActualizacion">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6 ">
+        <label for="idIdioma">Idioma:</label>
+        <input
+          formControlName="idIdioma"
+          id="idIdioma"
+          type="number"
+          class="form-control" [value]="pelicula.idioma.id">
+        <ul *ngIf="f.idIdioma.touched && f.idIdioma.invalid" class="text-danger my-2">
+          <li *ngIf="f.idIdioma.errors.required">Idioma es requerido.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+  </form>
+</div>

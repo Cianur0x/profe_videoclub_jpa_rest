@@ -17,7 +17,6 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.categoriaService.getAll().subscribe((data: Categoria[]) => {
       this.categorias = data;
-      console.log(this.categorias);
     })
   }
 

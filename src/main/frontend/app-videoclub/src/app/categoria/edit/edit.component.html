@@ -1,5 +1,4 @@
 <div>
-
   <div class="d-flex justify-content-between">
     <h4>Editar Categoría</h4>
     <a href="#" routerLink="/categoria/index" class="btn">Volver</a>
@@ -8,10 +7,9 @@
   <hr/>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
-
     <div class="form-group row">
       <div class="col-md-6 ">
-        <input type="hidden" name="id"  [value]="categoria.id"/>
+        <input type="hidden" name="id" formControlName="id" [value]="categoria.id"/>
         <label for="nombre">Nombre:</label>
         <input
           formControlName="nombre"

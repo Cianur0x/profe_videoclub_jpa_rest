@@ -21,7 +21,8 @@ public class CategoriaController {
 
     @GetMapping({"", "/"})
     public List<Categoria> all() {
-        log.info("Accediendo a todas las categorías");
+        log.info("Accediendo a todas las categorías " + this.categoriaService.all().size());
+
         return this.categoriaService.all();
     }
 

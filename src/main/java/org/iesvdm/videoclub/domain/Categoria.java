@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,14 +28,12 @@ public class Categoria {
 
     private String nombre;
 
-    @ManyToMany(
-            mappedBy = "categorias")
+    @ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
     @JsonIgnore
     Set<Pelicula> peliculas = new HashSet<>();
 
     @Column(name = "ultima_actualizacion")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",  shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
-
 
 }
