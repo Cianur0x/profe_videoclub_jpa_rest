@@ -4,9 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.exception.CategoriaNotFoundException;
 import org.iesvdm.videoclub.repository.CategoriaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,6 +27,42 @@ public class CategoriaService {
     public List<Categoria> all() {
         return this.categoriaRepository.findAll();
     }
+
+    public List<Categoria> all(Optional<String> buscarOpt, Optional<String> ordenarOpt) {
+        // por defecto es ascendente
+        if (buscarOpt.isPresent() && ordenarOpt.isPresent()) {
+            if (ordenarOpt.get().equals("desc")) {
+                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCaseOrderByNombreDesc(buscarOpt.get());
+            } else {
+                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCaseOrderByNombreAsc(buscarOpt.get());
+            }
+        } else if (buscarOpt.isEmpty() && ordenarOpt.isPresent()) {
+            if (ordenarOpt.get().equals("desc")) {
+                return this.categoriaRepository.findAllByOrderByNombreDesc();
+            } else {
+                return this.categoriaRepository.findAllByOrderByNombreAsc();
+            }
+        } else if (buscarOpt.isPresent() && ordenarOpt.isEmpty()) {
+            return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCase(buscarOpt.get());
+        } else {
+            return this.categoriaRepository.findAll();
+        }
+    }
+
+    public Map<String, Object> all (int pagina, int tamanio) {
+        Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("id").ascending());
+        Page<Categoria> pageAll = this.categoriaRepository.findAll(paginado);
+
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("categorias", pageAll.getContent());
+        response.put("currentPage", pageAll.getNumber());
+        response.put("totalItems", pageAll.getTotalElements());
+        response.put("totalPages", pageAll.getTotalPages());
+
+        return response;
+    }
+
 
     public Categoria save(Categoria categoria) {
         return this.categoriaRepository.save(categoria);

@@ -1,7 +1,8 @@
 package org.iesvdm.videoclub;
 
-import jakarta.transaction.Transactional;
-import org.iesvdm.videoclub.domain.*;
+import org.iesvdm.videoclub.domain.Categoria;
+import org.iesvdm.videoclub.domain.Idioma;
+import org.iesvdm.videoclub.domain.Pelicula;
 import org.iesvdm.videoclub.repository.CategoriaRepository;
 import org.iesvdm.videoclub.repository.IdiomaRepository;
 import org.iesvdm.videoclub.repository.PeliculaRepository;
@@ -10,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootTest
 class VideoclubApplicationTests {
@@ -30,27 +31,122 @@ class VideoclubApplicationTests {
     void contextLoads() {
     }
 
+//    @Test
+//    void crearVideoclub() {
+//        Idioma idioma1 = new Idioma();
+//        idioma1.setNombre("Inglés");
+//        idiomaRepository.save(idioma1);
+//
+//        Categoria cat1 = new Categoria();
+//        cat1.setNombre("Ciencia Ficción");
+//        categoriaRepository.save(cat1);
+//
+//        Categoria cat2 = new Categoria();
+//        cat2.setNombre("Acción");
+//        categoriaRepository.save(cat2);
+//
+//        Categoria cat3 = new Categoria();
+//        cat3.setNombre("Fantasía");
+//        categoriaRepository.save(cat3);
+//
+//        Set<Categoria> categoriasPeli1 = new HashSet<>();
+//        categoriasPeli1.add(cat1);
+//        categoriasPeli1.add(cat3);
+//
+//        Pelicula peli1 = new Pelicula();
+//        peli1.setTitulo("X-Men");
+//        peli1.setIdioma(idioma1);
+//        peli1.setCategorias(categoriasPeli1);
+//        peliculaRepository.save(peli1);
+//
+//        Set<Categoria> categoriasPeli2 = new HashSet<>();
+//        categoriasPeli2.add(cat2);
+//        categoriasPeli2.add(cat1);
+//        Pelicula peli2 = new Pelicula();
+//        peli2.setTitulo("Logan");
+//        peli2.setIdioma(idioma1);
+//        peli2.setCategorias(categoriasPeli2);
+//        peliculaRepository.save(peli2);
+//    }
+
     @Test
-    void GuardarManyToMany() {
-        Idioma idioma = new Idioma(0L, "Inglés", null, new HashSet<>());
-        idiomaRepository.save(idioma);
-        Idioma idioma2 = new Idioma(0L, "Español", null, new HashSet<>());
+    void crearVideoclub2() {
+
+        Idioma idioma1 = new Idioma();
+        idioma1.setNombre("Inglés");
+        idiomaRepository.save(idioma1);
+
+        Idioma idioma2 = new Idioma();
+        idioma2.setNombre("Español Castellano");
         idiomaRepository.save(idioma2);
 
-        Pelicula pelicula = new Pelicula(0, "X-Men", "", null, null, new HashSet<>(), null);
-        pelicula.setIdioma(idioma);
-        pelicula.setIdIdioma(idioma.getId());
-        peliculaRepository.save(pelicula);
-        Pelicula pelicula1 = new Pelicula(0, "Logan", "", null, null, new HashSet<>(), null);
-        pelicula1.setIdIdioma(idioma2.getId());
-        pelicula1.setIdioma(idioma2);
-        peliculaRepository.save(pelicula1);
+        Idioma idioma3 = new Idioma();
+        idioma3.setNombre("Español Latino");
+        idiomaRepository.save(idioma3);
 
-        Categoria categoria1 = new Categoria(0, "Acción", new HashSet<>(), null);
-        Categoria categoria2 = new Categoria(0, "Ciencia Ficción", new HashSet<>(), null);
-        categoriaRepository.save(categoria1);
-        categoriaRepository.save(categoria2);
+        Categoria cat1 = new Categoria();
+        cat1.setNombre("Ciencia Ficción");
+        cat1.setUltimaActualizacion(new Date(2024 - 1900, 2, 29, 0, 0, 0));
+        categoriaRepository.save(cat1);
+
+        Categoria cat2 = new Categoria();
+        cat2.setNombre("Acción");
+        categoriaRepository.save(cat2);
+
+        Categoria cat3 = new Categoria();
+        cat3.setNombre("Fantasía");
+        categoriaRepository.save(cat3);
+
+        Categoria cat4 = new Categoria();
+        cat4.setNombre("Animación");
+        cat4.setUltimaActualizacion(new Date(2024 - 1900, 2, 29, 0, 0, 0));
+        categoriaRepository.save(cat4);
+
+        Set<Categoria> catsPeli1 = new HashSet<>();
+        catsPeli1.add(cat1);
+
+        Pelicula peli1 = new Pelicula();
+        peli1.setTitulo("X-Men");
+        peli1.setDescripcion("Magneto kidnaps Marie, a young mutant, with the intention of using her powers to destroy humanity. However, the X-Men and Wolverine team up to save her and stop Magneto.");
+        peli1.setIdioma(idioma1);
+        peli1.setCategorias(catsPeli1);
+        peliculaRepository.save(peli1);
+
+        Set<Categoria> catsPeli2 = new HashSet<>();
+        catsPeli2.add(cat1);
+        catsPeli2.add(cat2);
+
+        Pelicula peli2 = new Pelicula();
+        peli2.setTitulo("Logan");
+        peli2.setDescripcion("Logan comes out of retirement to escort a young mutant named Laura to a safe place. He meets with other mutants, who run from an evil corporation that has been experimenting with them, along the way.");
+        peli2.setIdioma(idioma1);
+        peli2.setCategorias(catsPeli2);
+        peliculaRepository.save(peli2);
+
+        Set<Categoria> catsPeli3 = new HashSet<>();
+        catsPeli3.add(cat3);
+        catsPeli3.add(cat4);
+
+        Pelicula peli3 = new Pelicula();
+        peli3.setTitulo("Kung Fu Panda 4");
+        peli3.setDescripcion("After Po is tapped to become the Spiritual Leader of the Valley of Peace, he needs to find and train a new Dragon Warrior, while a wicked sorceress plans to re-summon all the master villains whom Po has vanquished to the spirit realm.");
+        peli3.setIdioma(idioma3);
+        peli3.setCategorias(catsPeli3);
+        peliculaRepository.save(peli3);
+
+        Set<Categoria> catsPeli4 = new HashSet<>();
+        catsPeli4.add(cat1);
+        catsPeli4.add(cat2);
+
+        Pelicula peli4 = new Pelicula();
+        peli4.setTitulo("Dune II");
+        peli4.setDescripcion("Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe, he must prevent a terrible future only he can foresee.");
+        peli4.setIdioma(idioma2);
+        peli4.setCategorias(catsPeli4);
+        peliculaRepository.save(peli4);
+
     }
+
 
 //    @Test
 //    @Transactional

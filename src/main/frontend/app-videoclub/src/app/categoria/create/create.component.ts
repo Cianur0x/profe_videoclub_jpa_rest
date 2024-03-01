@@ -12,7 +12,7 @@ export class CreateComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+')]),
-    fecha: new FormControl()
+    ultimaActualizacion: new FormControl()
   });
 
   constructor(
@@ -22,7 +22,6 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   get f() {

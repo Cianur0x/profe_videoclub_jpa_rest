@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -22,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 //Si utilizo @OneToMany(FetchType.LAZY) además debo usar
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Idioma {
@@ -29,6 +27,7 @@ public class Idioma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_idioma")
+    @EqualsAndHashCode.Include
     private Long id;
 
     private String nombre;
@@ -37,11 +36,11 @@ public class Idioma {
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDate ultimaActualizacion;
 
-    @OneToMany(mappedBy = "idioma", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idioma")
     @JsonIgnore
-    private Set<Pelicula> peliculasIdioma;
+    private Set<Pelicula> peliculasIdioma = new HashSet<>();
 
-//    @OneToMany(mappedBy = "idiomaOriginal")
-//    @JsonIgnore
-//    private HashSet<Pelicula> peliculasIdiomaOriginal;
+    @OneToMany(mappedBy = "idiomaOriginal")
+    @JsonIgnore
+    private Set<Pelicula> peliculasIdiomaOriginal;
 }
