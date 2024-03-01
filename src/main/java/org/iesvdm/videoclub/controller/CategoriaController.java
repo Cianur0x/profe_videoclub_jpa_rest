@@ -26,7 +26,7 @@ public class CategoriaController {
 
     @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!pagina", "!tamanio"})
     public List<Categoria> all() {
-        log.info("Accediendo a todas las categorías");
+        log.info("Accediendo a todas las categorías sin parametros");
 
         return this.categoriaService.all().stream().map(
                 categoria -> {
@@ -36,7 +36,7 @@ public class CategoriaController {
         ).collect(Collectors.toList());
     }
 
-    //http://localhost:8080/categoria?buscar=campo&order=desc
+    // http://localhost:8080/categoria?buscar=campo&order=desc
     @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio"})
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOptional,
                                @RequestParam("ordenar") Optional<String> ordenarOptional) {

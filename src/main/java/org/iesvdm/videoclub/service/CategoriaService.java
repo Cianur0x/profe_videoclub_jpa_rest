@@ -49,7 +49,7 @@ public class CategoriaService {
         }
     }
 
-    public Map<String, Object> all (int pagina, int tamanio) {
+    public Map<String, Object> all(int pagina, int tamanio) {
         Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("id").ascending());
         Page<Categoria> pageAll = this.categoriaRepository.findAll(paginado);
 
@@ -62,7 +62,6 @@ public class CategoriaService {
 
         return response;
     }
-
 
     public Categoria save(Categoria categoria) {
         return this.categoriaRepository.save(categoria);

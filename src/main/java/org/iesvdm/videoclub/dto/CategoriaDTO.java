@@ -10,10 +10,9 @@ public class CategoriaDTO extends Categoria {
 
     private int peliculasAsociadas;
 
-    public CategoriaDTO (Categoria categoria, int conteo) {
+    public CategoriaDTO(Categoria categoria, int conteo) {
         super(categoria.getId(), categoria.getNombre(), categoria.getPeliculas(), categoria.getUltimaActualizacion());
         this.peliculasAsociadas = conteo;
     }
 
 }
-
