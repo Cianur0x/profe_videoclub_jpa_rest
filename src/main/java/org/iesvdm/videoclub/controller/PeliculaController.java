@@ -1,15 +1,14 @@
 package org.iesvdm.videoclub.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.videoclub.domain.Idioma;
 import org.iesvdm.videoclub.domain.Pelicula;
-import org.iesvdm.videoclub.repository.IdiomaRepository;
-import org.iesvdm.videoclub.service.IdiomaService;
 import org.iesvdm.videoclub.service.PeliculaService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -17,22 +16,32 @@ import java.util.List;
 @RequestMapping("/peliculas")
 public class PeliculaController {
     private final PeliculaService peliculaService;
-    private final IdiomaService idiomaService;
 
-    public PeliculaController(PeliculaService peliculaService, IdiomaService idiomaService) {
+    public PeliculaController(PeliculaService peliculaService) {
         this.peliculaService = peliculaService;
-        this.idiomaService = idiomaService;
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping(value = {"", "/"}, params = {"!orden", "!paginado"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
-    @PostMapping({"", "/"})
-    public Pelicula newPelicula(@RequestBody Pelicula pelicula ) {
+    @GetMapping(value = {"", "/"}, params = {"!paginado"})
+    public List<Pelicula> ordenarPorCampos(String[] orden) {
+        log.info("Accediendo a todas las películas con filtro orden " + orden.length);
+        return this.peliculaService.ordenCampos(orden);
+    }
 
+    @GetMapping(value = {"", "/"})
+    public ResponseEntity<Map<String, Object>> allPag(@RequestParam(value = "paginado", defaultValue = "0") String[] pagina) {
+        log.info("Accediendo a películas con paginación");
+        Map<String, Object> responseAll = this.peliculaService.paginado(pagina);
+        return ResponseEntity.ok(responseAll);
+    }
+
+    @PostMapping({"", "/"})
+    public Pelicula newPelicula(@RequestBody Pelicula pelicula) {
         return this.peliculaService.save(pelicula);
     }
 

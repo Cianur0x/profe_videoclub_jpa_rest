@@ -36,7 +36,6 @@ public class CategoriaController {
         ).collect(Collectors.toList());
     }
 
-    // http://localhost:8080/categoria?buscar=campo&order=desc
     @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio"})
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOptional,
                                @RequestParam("ordenar") Optional<String> ordenarOptional) {
@@ -44,7 +43,6 @@ public class CategoriaController {
         return this.categoriaService.all(buscarOptional, ordenarOptional);
     }
 
-    // http://localhost:8080/categoria?pagina=0&tamanio=2
     @GetMapping(value = {"", "/"})
     public ResponseEntity<Map<String, Object>> all(@RequestParam(value = "pagina", defaultValue = "0") int pagina,
                                                    @RequestParam(value = "tamanio", defaultValue = "3") int tamanio) {

@@ -32,9 +32,9 @@ public class CategoriaService {
         // por defecto es ascendente
         if (buscarOpt.isPresent() && ordenarOpt.isPresent()) {
             if (ordenarOpt.get().equals("desc")) {
-                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCaseOrderByNombreDesc(buscarOpt.get());
+                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCase(buscarOpt.get(), Sort.by("nombre").descending());
             } else {
-                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCaseOrderByNombreAsc(buscarOpt.get());
+                return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCase(buscarOpt.get(), Sort.by("nombre").ascending());
             }
         } else if (buscarOpt.isEmpty() && ordenarOpt.isPresent()) {
             if (ordenarOpt.get().equals("desc")) {
@@ -42,7 +42,7 @@ public class CategoriaService {
             } else {
                 return this.categoriaRepository.findAllByOrderByNombreAsc();
             }
-        } else if (buscarOpt.isPresent() && ordenarOpt.isEmpty()) {
+        } else if (buscarOpt.isPresent()) {
             return this.categoriaRepository.findCategoriaByNombreContainingIgnoreCase(buscarOpt.get());
         } else {
             return this.categoriaRepository.findAll();
